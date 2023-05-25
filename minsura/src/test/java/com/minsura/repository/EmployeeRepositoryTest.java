@@ -258,5 +258,32 @@ class EmployeeRepositoryTest {
     }
 
 
+    // JUnit test for  native sql with index params
+    @DisplayName("JUnit test for  native sql with index params")
+
+    @Test
+    public void givenFirstAndLastName_whenFindByNativeSQL_thenReturnEmployeeObject() {
+
+        //given - precondition or set up
+
+        Employee employee = Employee.builder()
+                .firstName("John")
+                .lastName("Smith")
+                .email("smith778@yahoo.com")
+                .build();
+
+        employeeRepository.save(employee);
+
+        //when - action or the behavior that is being tested
+
+        Employee savedEmployee = employeeRepository.findByNativeSQL(employee.getFirstName(), employee.getLastName());
+
+
+        //then- verify the output
+        assertThat(savedEmployee).isNotNull();
+
+
+    }
+
 
 }
