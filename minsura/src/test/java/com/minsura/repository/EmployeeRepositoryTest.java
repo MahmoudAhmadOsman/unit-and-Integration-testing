@@ -1,7 +1,7 @@
 /*---------
       => Author: Mahmoud Osman
       => Github Link: https://github.com/mahmoudahmadosman
-     --------- */
+--------- */
 
 package com.minsura.repository;
 
@@ -188,7 +188,7 @@ class EmployeeRepositoryTest {
         employeeRepository.save(employee);
 
         //when - action or the behavior that is being tested
-//        employeeRepository.delete(employee);
+//        employeeRepository.delete(employee); - this method also works
         employeeRepository.deleteById(employee.getId());
         Optional<Employee> employeeOptional = employeeRepository.findById(employee.getId());
 
@@ -199,6 +199,64 @@ class EmployeeRepositoryTest {
 
     }
 
-    
+
+    // JUnit test for JPQL query with index
+    @DisplayName("JUnit test for JPQL query with index")
+    @Test
+    public void givenFirstAndLastName_whenFindByJPQL_thenReturnEmployeeObject() {
+
+        //given - precondition or set up
+
+        Employee employee = Employee.builder()
+                .firstName("John")
+                .lastName("Smith")
+                .email("smith778@yahoo.com")
+                .build();
+
+        employeeRepository.save(employee);
+        String fistName = "John";
+        String lastName = "Smith";
+
+        //when - action or the behavior that is being tested
+        Employee savedEmployee = employeeRepository.findByJPQL(fistName, lastName);
+
+
+        //then- verify the output
+
+        assertThat(savedEmployee).isNotNull();
+
+
+    }
+
+
+    // JUnit test for JPQL query with named params
+    @DisplayName("JUnit test for JPQL query with named params")
+    @Test
+    public void givenFirstAndLastName_whenFindByJPQLNamedParams_thenReturnEmployeeObject() {
+
+        //given - precondition or set up
+
+        Employee employee = Employee.builder()
+                .firstName("John")
+                .lastName("Smith")
+                .email("smith778@yahoo.com")
+                .build();
+
+        employeeRepository.save(employee);
+        String fistName = "John";
+        String lastName = "Smith";
+
+        //when - action or the behavior that is being tested
+        Employee savedEmployee = employeeRepository.findByJPQLNamedParams(fistName, lastName);
+
+
+        //then- verify the output
+
+        assertThat(savedEmployee).isNotNull();
+
+
+    }
+
+
 
 }

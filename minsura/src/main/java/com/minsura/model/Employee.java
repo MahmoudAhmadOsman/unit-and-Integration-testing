@@ -13,7 +13,6 @@ import org.antlr.v4.runtime.misc.NotNull;
 @Entity
 @Table(name = "employees")
 public class Employee {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
