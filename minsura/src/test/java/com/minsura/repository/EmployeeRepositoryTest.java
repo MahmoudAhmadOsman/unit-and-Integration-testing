@@ -1,3 +1,8 @@
+/*---------
+      => Author: Mahmoud Osman
+      => Github Link: https://github.com/mahmoudahmadosman
+     --------- */
+
 package com.minsura.repository;
 
 
@@ -55,20 +60,20 @@ class EmployeeRepositoryTest {
 
         //given - precondition or set up
         //create employee object
-        Employee employee1 = Employee.builder()
+        Employee employee = Employee.builder()
                 .firstName("Mahmoud")
-                .lastName("osman")
+                .lastName("Osman")
                 .email("osman778@yahoo.com")
                 .build();
 
-        Employee employee2 = Employee.builder()
+        Employee employee1 = Employee.builder()
                 .firstName("John")
                 .lastName("Doe")
                 .email("john_doe900@yahoo.com")
                 .build();
         //save the 2 employee objects
+        employeeRepository.save(employee);
         employeeRepository.save(employee1);
-        employeeRepository.save(employee2);
 
         //when - action or the behavior that is being tested
         //--findAll() method - the behavior that is being tested
@@ -78,6 +83,56 @@ class EmployeeRepositoryTest {
         //then- verify the output
         assertThat(employeeList).isNotNull();
         assertThat(employeeList.size()).isEqualTo(2); // should return 2 object/employees
+
+    }
+
+
+    // JUnit test for get employee by id
+    @DisplayName("JUnit test for get employee by id")
+
+    @Test
+    public void givenEmployeeObject_whenFindById_thenReturnEmployeeObject() {
+
+        //given - precondition or set up
+        Employee employee = Employee.builder()
+                .firstName("Mahmoud")
+                .lastName("Osman")
+                .email("osman778@yahoo.com")
+                .build();
+
+        employeeRepository.save(employee);
+
+
+        //when - action or the behavior that is being tested
+        Employee employeeDB = employeeRepository.findById(employee.getId()).get();
+
+        //then- verify the output
+
+        assertThat(employeeDB).isNotNull();
+
+    }
+
+
+    // JUnit test for get employee by email
+    @DisplayName("JUnit test for get employee by email")
+
+    @Test
+    public void givenEmployeeEmail_whenFindByEmail_thenReturnEmployeeObject() {
+
+        //given - precondition or set up
+        Employee employee = Employee.builder()
+                .firstName("John")
+                .lastName("Smith")
+                .email("smith778@yahoo.com")
+                .build();
+
+        employeeRepository.save(employee);
+        //when - action or the behavior that is being tested
+        Employee employeeDB = employeeRepository.findByEmail(employee.getEmail()).get();
+
+        //then- verify the output
+        assertThat(employeeDB).isNotNull();
+
 
     }
 
