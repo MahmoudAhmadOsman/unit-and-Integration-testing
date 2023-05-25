@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -136,5 +137,68 @@ class EmployeeRepositoryTest {
 
     }
 
+
+    // JUnit test for update employee
+    @DisplayName("JUnit test for update employee")
+    @Test
+    public void givenEmployeeObject_whenUpdateEmployee_thenReturnUpdatedEmployee() {
+
+        //given - precondition or set up
+        Employee employee = Employee.builder()
+                .firstName("John")
+                .lastName("Smith")
+                .email("smith778@yahoo.com")
+                .build();
+
+        employeeRepository.save(employee);
+
+        //when - action or the behavior that is being tested
+        //1. get employee from the database by it
+        Employee savedEmployee = employeeRepository.findById(employee.getId()).get();
+
+        //2. update employee info
+        savedEmployee.setFirstName("Miski");
+        savedEmployee.setLastName("Ali");
+        savedEmployee.setEmail("miski_ali80@yahoo.com");
+
+        Employee updatedEmployee = employeeRepository.save(savedEmployee); //save the employee again
+
+        //then- verify the output
+        assertThat(updatedEmployee.getEmail()).isEqualTo("miski_ali80@yahoo.com");
+        assertThat(updatedEmployee.getFirstName()).isEqualTo("Miski");
+
+
+    }
+
+
+    // JUnit test for delete employee
+    @DisplayName("JUnit test for delete employee")
+
+    @Test
+    public void givenEmployeeObject_whenDelete_thenDeleteEmployeeObject() {
+
+        //given - precondition or set up
+
+        Employee employee = Employee.builder()
+                .firstName("John")
+                .lastName("Smith")
+                .email("smith778@yahoo.com")
+                .build();
+
+        employeeRepository.save(employee);
+
+        //when - action or the behavior that is being tested
+//        employeeRepository.delete(employee);
+        employeeRepository.deleteById(employee.getId());
+        Optional<Employee> employeeOptional = employeeRepository.findById(employee.getId());
+
+
+        //then- verify the output
+        assertThat(employeeOptional).isEmpty();
+
+
+    }
+
+    
 
 }

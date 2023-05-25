@@ -2,6 +2,7 @@ package com.minsura.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.antlr.v4.runtime.misc.NotNull;
 
 
 @Setter
@@ -15,6 +16,7 @@ public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long id;
 
     @Column(name = "first_name", nullable = false)
