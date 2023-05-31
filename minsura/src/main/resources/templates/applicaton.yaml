@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    username: root
+    initialization-mode: always
+    url: jdbc:mysql://localhost:3306/minsura?useSSL=false
+    password: ''
+  jpa:
+    properties:
+      hibernate:
+        format_sql: 'true'
+    hibernate:
+      ddl-auto: update
+    show-sql: 'true'

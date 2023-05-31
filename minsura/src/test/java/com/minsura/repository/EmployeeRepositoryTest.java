@@ -36,7 +36,7 @@ class EmployeeRepositoryTest {
                 .email("smith778@yahoo.com")
                 .build();
     }
-    
+
     // JUnit test for save employee method
     @DisplayName("JUnit test for save employee")
     @Test
