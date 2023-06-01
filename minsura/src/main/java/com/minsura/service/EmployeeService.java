@@ -14,8 +14,12 @@ import java.util.Optional;
 @Service
 public class EmployeeService implements EmployeeDAO {
 
-    @Autowired
+//    @Autowired - you don't need annotation if you have parametrized constructor
     private EmployeeRepository employeeRepository;
+
+    public EmployeeService(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
 
     @Override
     public Employee saveEmployee(Employee employee) {
@@ -23,7 +27,7 @@ public class EmployeeService implements EmployeeDAO {
         Optional<Employee> savedEmployee = employeeRepository.findByEmail(employee.getEmail());
 
         if (savedEmployee.isPresent()) {
-            throw new ResourceNotFoundException("Email already exists" + employee.getEmail());
+            throw new ResourceNotFoundException("Email already exists " + employee.getEmail());
         }
 
         return employeeRepository.save(employee);
