@@ -15,10 +15,8 @@ import java.util.Optional;
 
 class EmployeeServiceTest {
 
-
-    private EmployeeService employeeService;
-
     private EmployeeRepository employeeRepository;
+    private EmployeeService employeeService;
 
 
     //1
