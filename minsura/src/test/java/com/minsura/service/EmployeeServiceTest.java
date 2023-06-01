@@ -45,10 +45,10 @@ class EmployeeServiceTest {
 
 //        System.out.println(employeeRepository);
 //        System.out.println(employeeService);
-        //use BDD mockito method for findByEmail method in EmployeeService class
+        //use BDD Mockito method for findByEmail method in EmployeeService class
         BDDMockito.given(employeeRepository.findByEmail(employee.getEmail())).willReturn(Optional.empty());
 
-        //now for save() method in EmployeeService class
+        //now test  save() method in EmployeeService class
         BDDMockito.given(employeeRepository.save(employee)).willReturn(employee);
 
         //when - action or the behavior that is being tested
@@ -56,7 +56,7 @@ class EmployeeServiceTest {
         Employee savedEmployee = employeeService.saveEmployee(employee);
 
 
-//        System.out.println(savedEmployee);
+        //System.out.println(savedEmployee); // print the savedEmployee
 
         //then- verify the output
         Assertions.assertThat(savedEmployee).isNotNull();
