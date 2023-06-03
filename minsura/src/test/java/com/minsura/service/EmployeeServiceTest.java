@@ -15,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -55,6 +56,7 @@ class EmployeeServiceTest {
         System.out.println(employeeRepository); // print the object
         System.out.println(employeeService); // print the object
         //use BDD Mockito method for findByEmail method in EmployeeService class
+        //stubbing findByEmail() method
         BDDMockito.given(employeeRepository.findByEmail(employee.getEmail())).willReturn(Optional.empty());
 
         //now test  save() method in EmployeeService class
@@ -81,13 +83,10 @@ class EmployeeServiceTest {
     public void givenExistingEmployeeEmail_whenSaveEmployee_thenThrowsException() {
 
         //given - precondition or set up
+        //stubbing findByEmail() method
 
-        BDDMockito.given(employeeRepository.findByEmail(employee.getEmail()))
-                .willReturn(Optional.of(employee));
+        BDDMockito.given(employeeRepository.findByEmail(employee.getEmail())).willReturn(Optional.of(employee));
 
-        //now test  save() method in EmployeeService class
-//        BDDMockito.given(employeeRepository.save(employee))
-//                .willReturn(employee); // not required - extra stubbing
 
         //when - action or the behavior that is being tested
         org.junit.jupiter.api.Assertions.assertThrows(ResourceNotFoundException.class, () -> { //lambda expression
@@ -97,6 +96,38 @@ class EmployeeServiceTest {
 
         //then- verify the output
         verify(employeeRepository, never()).save(any(Employee.class));
+
+    }
+
+
+    // JUnit test for getAllEmployees method
+    @DisplayName("JUnit test for getAllEmployees method")
+
+    @Test
+    public void givenEmployeesList_whenGetAllEmployees_thenReturnsEmployeesList() {
+
+        //given - precondition or set up
+
+        Employee employee1 = Employee.builder()
+                .id(2L)
+                .firstName("Sarah")
+                .lastName("Smith")
+                .email("sarah250@gmail.com")
+                .build();
+
+        //stubbing findAll() method
+        BDDMockito.given(employeeRepository.findAll()).willReturn(List.of(employee, employee1));
+
+        //when - action or the behavior that is being tested
+        //stubbing for getAllEmployees() method
+        List<Employee> employeesList = employeeService.getAllEmployees();
+
+
+        //then- verify the output
+        Assertions.assertThat(employeesList).isNotNull(); // check that the list is not empty
+        Assertions.assertThat(employeesList.size()).isEqualTo(2); // list size
+        System.out.println(employeesList.size());
+
 
     }
 
