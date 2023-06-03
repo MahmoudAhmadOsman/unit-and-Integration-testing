@@ -13,7 +13,7 @@ import java.util.Optional;
 @Service
 public class EmployeeService implements EmployeeDAO {
 
-//    @Autowired - you don't need annotation if you have parametrized constructor
+    //    @Autowired - you don't need annotation if you have parametrized constructor
     private EmployeeRepository employeeRepository;
 
     public EmployeeService(EmployeeRepository employeeRepository) {
@@ -26,7 +26,7 @@ public class EmployeeService implements EmployeeDAO {
         Optional<Employee> savedEmployee = employeeRepository.findByEmail(employee.getEmail());
 
         if (savedEmployee.isPresent()) {
-            throw new ResourceNotFoundException("Email already exists " + employee.getEmail());
+            throw new ResourceNotFoundException("Employee's email already exists " + employee.getEmail());
         }
 
         return employeeRepository.save(employee);
@@ -34,12 +34,12 @@ public class EmployeeService implements EmployeeDAO {
 
     @Override
     public Optional<Employee> getEmployeeById(Long id) {
-        return Optional.empty();
+        return Optional.ofNullable(employeeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to find this id " + id)));
     }
 
     @Override
     public List<Employee> getAllEmployees() {
-        return null;
+        return employeeRepository.findAll();
     }
 
     @Override
@@ -54,6 +54,11 @@ public class EmployeeService implements EmployeeDAO {
 
     @Override
     public void deleteEmployeeById(Long id) {
+        Optional<Employee> deleteEmployee = employeeRepository.findById(id);
+        if (deleteEmployee.isEmpty()) {
+            throw new ResourceNotFoundException("Employee with this id doesn't exist " + id);
+        }
+        employeeRepository.deleteById(id);
 
     }
 }
