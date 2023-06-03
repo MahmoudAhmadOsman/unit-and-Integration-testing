@@ -72,11 +72,11 @@ class EmployeeRepositoryTest {
 
         //when - action or the behavior that is being tested
         //--findAll() method - the behavior that is being tested
-        List<Employee> employeeList = employeeRepository.findAll();
+        List<Employee> employeesList = employeeRepository.findAll();
 
         //then- verify the output
-        assertThat(employeeList).isNotNull();
-        assertThat(employeeList.size()).isEqualTo(2); // should return 2 object/employees
+        assertThat(employeesList).isNotNull();
+        assertThat(employeesList.size()).isEqualTo(2); // should return 2 object/employees
     }
 
 
@@ -90,10 +90,10 @@ class EmployeeRepositoryTest {
         employeeRepository.save(employee);
 
         //when - action or the behavior that is being tested
-        Employee employeeDB = employeeRepository.findById(employee.getId()).get();
+        Employee findEmployeeById = employeeRepository.findById(employee.getId()).get();
 
         //then- verify the output
-        assertThat(employeeDB).isNotNull();
+        assertThat(findEmployeeById).isNotNull();
     }
 
 
@@ -107,10 +107,10 @@ class EmployeeRepositoryTest {
 
         employeeRepository.save(employee);
         //when - action or the behavior that is being tested
-        Employee employeeDB = employeeRepository.findByEmail(employee.getEmail()).get();
+        Employee findEmployeeByEmail = employeeRepository.findByEmail(employee.getEmail()).get();
 
         //then- verify the output
-        assertThat(employeeDB).isNotNull();
+        assertThat(findEmployeeByEmail).isNotNull();
     }
 
 
