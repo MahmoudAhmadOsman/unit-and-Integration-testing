@@ -15,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -78,7 +79,6 @@ class EmployeeServiceTest {
 
     // JUnit test for saveEmployee method that throws exception
     @DisplayName("JUnit test for saveEmployee method with throws exception")
-
     @Test
     public void givenExistingEmployeeEmail_whenSaveEmployee_thenThrowsException() {
 
@@ -104,7 +104,7 @@ class EmployeeServiceTest {
     @DisplayName("JUnit test for getAllEmployees method")
 
     @Test
-    public void givenEmployeesList_whenGetAllEmployees_thenReturnsEmployeesList() {
+    public void givenEmployeesList_whenGetAllEmployees_thenReturnEmployeesList() {
 
         //given - precondition or set up
 
@@ -126,7 +126,37 @@ class EmployeeServiceTest {
         //then- verify the output
         Assertions.assertThat(employeesList).isNotNull(); // check that the list is not empty
         Assertions.assertThat(employeesList.size()).isEqualTo(2); // list size
-        System.out.println(employeesList.size());
+
+
+    }
+
+
+    // JUnit test for getAllEmployees method
+    @DisplayName("JUnit test for getAllEmployees method - negative scenario")
+
+    @Test
+    public void givenEmptyEmployeesList_whenGetAllEmployees_thenReturnEmptyEmployeesList() {
+
+        //given - precondition or set up
+
+        Employee employee1 = Employee.builder()
+                .id(1L)
+                .firstName("Sarah")
+                .lastName("Smith")
+                .email("sarah250@gmail.com")
+                .build();
+
+
+        BDDMockito.given(employeeRepository.findAll()).willReturn(Collections.emptyList());
+
+        //when - action or the behavior that is being tested
+
+        List<Employee> employeesList = employeeService.getAllEmployees();
+
+
+        //then- verify the output
+        Assertions.assertThat(employeesList).isEmpty();
+        Assertions.assertThat(employeesList.size()).isEqualTo(0);
 
 
     }
