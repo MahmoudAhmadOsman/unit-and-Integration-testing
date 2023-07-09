@@ -4,7 +4,9 @@ package com.minsura.service;
 import com.minsura.exception.ResourceNotFoundException;
 import com.minsura.model.Employee;
 import com.minsura.repository.EmployeeRepository;
-import org.assertj.core.api.Assertions;
+//import org.assertj.core.api.Assertions;
+import static org.assertj.core.api.Assertions.assertThat; // used static & assertThat subclass
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -71,7 +73,7 @@ class EmployeeServiceTest {
         System.out.println(savedEmployee); // print the savedEmployee
 
         //then- verify the output
-        Assertions.assertThat(savedEmployee).isNotNull();
+        assertThat(savedEmployee).isNotNull();
 
 
     }
@@ -87,12 +89,10 @@ class EmployeeServiceTest {
 
         BDDMockito.given(employeeRepository.findByEmail(employee.getEmail())).willReturn(Optional.of(employee));
 
-
         //when - action or the behavior that is being tested
         org.junit.jupiter.api.Assertions.assertThrows(ResourceNotFoundException.class, () -> { //lambda expression
             employeeService.saveEmployee(employee);
         });
-
 
         //then- verify the output
         verify(employeeRepository, never()).save(any(Employee.class));
@@ -122,11 +122,9 @@ class EmployeeServiceTest {
         //stubbing for getAllEmployees() method
         List<Employee> employeesList = employeeService.getAllEmployees();
 
-
         //then- verify the output
-        Assertions.assertThat(employeesList).isNotNull(); // check that the list is not empty
-        Assertions.assertThat(employeesList.size()).isEqualTo(2); // list size
-
+        assertThat(employeesList).isNotNull(); // check that the list is not empty
+        assertThat(employeesList.size()).isEqualTo(2); // list size
 
     }
 
@@ -138,7 +136,6 @@ class EmployeeServiceTest {
     public void givenEmptyEmployeesList_whenGetAllEmployees_thenReturnEmptyEmployeesList() {
 
         //given - precondition or set up
-
         Employee employee1 = Employee.builder()
                 .id(1L)
                 .firstName("Sarah")
@@ -146,17 +143,32 @@ class EmployeeServiceTest {
                 .email("sarah250@gmail.com")
                 .build();
 
-
         BDDMockito.given(employeeRepository.findAll()).willReturn(Collections.emptyList());
 
         //when - action or the behavior that is being tested
-
         List<Employee> employeesList = employeeService.getAllEmployees();
 
-
         //then- verify the output
-        Assertions.assertThat(employeesList).isEmpty();
-        Assertions.assertThat(employeesList.size()).isEqualTo(0);
+        assertThat(employeesList).isEmpty();
+        assertThat(employeesList.size()).isEqualTo(0);
+
+
+    }
+
+
+    // JUnit test for getEmployeeById method
+    @DisplayName("JUnit test for getEmployeeById method")
+    @Test
+    public void givenEmployeeId_whenGetEmployeeById_thenReturnEmployeeObject() {
+
+        //given - precondition or set up
+
+        BDDMockito.given(employeeRepository.findById(1L)).willReturn(Optional.of(employee));
+
+        //when - action or the behavior that is being tested
+        Employee savedEmployee = employeeService.getEmployeeById(employee.getId()).get();
+        //then- verify the output
+        assertThat(savedEmployee).isNotNull();
 
 
     }

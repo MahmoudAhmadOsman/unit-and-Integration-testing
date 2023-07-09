@@ -9,9 +9,9 @@ import java.util.Optional;
 public interface EmployeeDAO {
     Employee saveEmployee(Employee employee);
 
-    Optional<Employee> getEmployeeById(Long id);
-
     List<Employee> getAllEmployees();
+
+    Optional<Employee> getEmployeeById(Long id);
 
     Employee updateEmployee(Long id, Employee employee);
 

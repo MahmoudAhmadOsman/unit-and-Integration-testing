@@ -34,7 +34,8 @@ public class EmployeeService implements EmployeeDAO {
 
     @Override
     public Optional<Employee> getEmployeeById(Long id) {
-        return Optional.ofNullable(employeeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to find this id " + id)));
+        return Optional.ofNullable(employeeRepository.findById(id).orElseThrow(()
+                -> new ResourceNotFoundException("Unable to find this id " + id)));
     }
 
     @Override
