@@ -22,8 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -41,7 +40,12 @@ class EmployeeServiceTest {
     //1
     @BeforeEach
     public void setup() {
-        employee = Employee.builder().id(1L).firstName("John").lastName("Doe").email("john_doe998@gmail.com").build();
+        employee = Employee.builder()
+                .id(1L)
+                .firstName("John")
+                .lastName("Doe")
+                .email("john_doe998@gmail.com")
+                .build();
     }
 
     // JUnit test for saveEmployee method
@@ -103,7 +107,12 @@ class EmployeeServiceTest {
 
         //given - precondition or set up
 
-        Employee employee1 = Employee.builder().id(2L).firstName("Sarah").lastName("Smith").email("sarah250@gmail.com").build();
+        Employee employee1 = Employee.builder()
+                .id(2L)
+                .firstName("Sarah")
+                .lastName("Smith")
+                .email("sarah250@gmail.com")
+                .build();
 
         //stubbing findAll() method
         BDDMockito.given(employeeRepository.findAll()).willReturn(List.of(employee, employee1));
@@ -126,7 +135,12 @@ class EmployeeServiceTest {
     public void givenEmptyEmployeesList_whenGetAllEmployees_thenReturnEmptyEmployeesList() {
 
         //given - precondition or set up
-        Employee employee1 = Employee.builder().id(1L).firstName("Sarah").lastName("Smith").email("sarah250@gmail.com").build();
+        Employee employee1 = Employee.builder()
+                .id(1L)
+                .firstName("Sarah")
+                .lastName("Smith")
+                .email("sarah250@gmail.com")
+                .build();
 
         BDDMockito.given(employeeRepository.findAll()).willReturn(Collections.emptyList());
 
@@ -166,7 +180,6 @@ class EmployeeServiceTest {
     public void givenEmployeeObject_whenUpdateEmployee_thenReturnUpdatedEmployee() {
 
         //given - precondition or set up
-
         BDDMockito.given(employeeRepository.save(employee)).willReturn(employee);
         //update employee info
         employee.setFirstName("Aliyah");
@@ -174,12 +187,10 @@ class EmployeeServiceTest {
         employee.setEmail("aliyah88@yahoo.com");
 
         //when - action or the behavior that is being tested
-
         Employee updatedEmployee = employeeService.updateEmployee(employee);
 
 
         //then- verify the output
-
         assertThat(updatedEmployee.getFirstName()).isEqualTo("Aliyah");
         assertThat(updatedEmployee.getLastName()).isEqualTo("Omar");
         assertThat(updatedEmployee.getEmail()).isEqualTo("aliyah88@yahoo.com");
@@ -188,6 +199,31 @@ class EmployeeServiceTest {
         System.out.println(updatedEmployee.getFirstName());
         System.out.println(updatedEmployee.getLastName());
         System.out.println(updatedEmployee.getEmail());
+
+
+    }
+
+
+    // JUnit test for deleteEmployeeById method
+    @DisplayName("JUnit test for deleteEmployeeById method")
+
+    @Test
+    public void givenEmployeeId_whenDeleteEmployee_thenReturnNothing() {
+
+        //given - precondition or set up
+        //Call the willDoNothing Api / return type is void
+        Long employeeId = 1L;
+
+        BDDMockito.willDoNothing().given(employeeRepository).deleteById(employeeId);
+
+
+        //when - action or the behavior that is being tested
+        employeeService.deleteEmployeeById(employeeId);
+
+
+        //then- verify the output
+        // Nothing to return but let's use verify method to verify the # of times deleteById is called
+        verify(employeeRepository, times(1)).deleteById(employeeId);
 
 
     }

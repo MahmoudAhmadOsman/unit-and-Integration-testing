@@ -59,10 +59,10 @@ public class EmployeeService implements EmployeeDAO {
 
     @Override
     public void deleteEmployeeById(Long id) {
-        Optional<Employee> deleteEmployee = employeeRepository.findById(id);
-        if (deleteEmployee.isEmpty()) {
-            throw new ResourceNotFoundException("Employee with this id doesn't exist " + id);
-        }
+//        Optional<Employee> deletedEmployee = employeeRepository.findById(id);
+//        if (deletedEmployee.isEmpty()) {
+//            throw new ResourceNotFoundException("Employee with this id doesn't exist " + id);
+//        }
         employeeRepository.deleteById(id);
 
     }
