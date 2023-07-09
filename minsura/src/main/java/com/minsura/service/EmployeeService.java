@@ -34,9 +34,9 @@ public class EmployeeService implements EmployeeDAO {
 
     @Override
     public Optional<Employee> getEmployeeById(Long id) {
-        return Optional.ofNullable(employeeRepository.findById(id).orElseThrow(()
-                -> new ResourceNotFoundException("Unable to find this id " + id)));
+        return Optional.ofNullable(employeeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to find this id " + id)));
     }
+
 
     @Override
     public List<Employee> getAllEmployees() {
@@ -44,9 +44,13 @@ public class EmployeeService implements EmployeeDAO {
     }
 
     @Override
-    public Employee updateEmployee(Long id, Employee employee) {
-        return null;
+    public Employee updateEmployee(Employee updatedEmployee) {
+        return employeeRepository.save(updatedEmployee);
     }
+//    @Override
+//    public Employee updateEmployee(Long id, Employee employee) {
+//        return null;
+//    }
 
     @Override
     public Employee updateEmployeeByFields(Long id, Map<String, Object> fields) {

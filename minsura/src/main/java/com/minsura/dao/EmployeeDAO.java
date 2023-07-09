@@ -13,7 +13,8 @@ public interface EmployeeDAO {
 
     Optional<Employee> getEmployeeById(Long id);
 
-    Employee updateEmployee(Long id, Employee employee);
+//    Employee updateEmployee(Long id, Employee employee);
+Employee updateEmployee(Employee updatedEmployee);
 
     Employee updateEmployeeByFields(Long id, Map<String, Object> fields);
 

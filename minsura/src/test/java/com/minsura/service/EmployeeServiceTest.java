@@ -41,12 +41,7 @@ class EmployeeServiceTest {
     //1
     @BeforeEach
     public void setup() {
-        employee = Employee.builder()
-                .id(1L)
-                .firstName("John")
-                .lastName("Doe")
-                .email("john_doe998@gmail.com")
-                .build();
+        employee = Employee.builder().id(1L).firstName("John").lastName("Doe").email("john_doe998@gmail.com").build();
     }
 
     // JUnit test for saveEmployee method
@@ -108,12 +103,7 @@ class EmployeeServiceTest {
 
         //given - precondition or set up
 
-        Employee employee1 = Employee.builder()
-                .id(2L)
-                .firstName("Sarah")
-                .lastName("Smith")
-                .email("sarah250@gmail.com")
-                .build();
+        Employee employee1 = Employee.builder().id(2L).firstName("Sarah").lastName("Smith").email("sarah250@gmail.com").build();
 
         //stubbing findAll() method
         BDDMockito.given(employeeRepository.findAll()).willReturn(List.of(employee, employee1));
@@ -136,12 +126,7 @@ class EmployeeServiceTest {
     public void givenEmptyEmployeesList_whenGetAllEmployees_thenReturnEmptyEmployeesList() {
 
         //given - precondition or set up
-        Employee employee1 = Employee.builder()
-                .id(1L)
-                .firstName("Sarah")
-                .lastName("Smith")
-                .email("sarah250@gmail.com")
-                .build();
+        Employee employee1 = Employee.builder().id(1L).firstName("Sarah").lastName("Smith").email("sarah250@gmail.com").build();
 
         BDDMockito.given(employeeRepository.findAll()).willReturn(Collections.emptyList());
 
@@ -169,6 +154,40 @@ class EmployeeServiceTest {
         Employee savedEmployee = employeeService.getEmployeeById(employee.getId()).get();
         //then- verify the output
         assertThat(savedEmployee).isNotNull();
+
+
+    }
+
+
+    // JUnit test for updateEmployee method
+    @DisplayName("JUnit test for updateEmployee method")
+
+    @Test
+    public void givenEmployeeObject_whenUpdateEmployee_thenReturnUpdatedEmployee() {
+
+        //given - precondition or set up
+
+        BDDMockito.given(employeeRepository.save(employee)).willReturn(employee);
+        //update employee info
+        employee.setFirstName("Aliyah");
+        employee.setLastName("Omar");
+        employee.setEmail("aliyah88@yahoo.com");
+
+        //when - action or the behavior that is being tested
+
+        Employee updatedEmployee = employeeService.updateEmployee(employee);
+
+
+        //then- verify the output
+
+        assertThat(updatedEmployee.getFirstName()).isEqualTo("Aliyah");
+        assertThat(updatedEmployee.getLastName()).isEqualTo("Omar");
+        assertThat(updatedEmployee.getEmail()).isEqualTo("aliyah88@yahoo.com");
+
+        /*========= Print first name, last name & email to see the changes ========= */
+        System.out.println(updatedEmployee.getFirstName());
+        System.out.println(updatedEmployee.getLastName());
+        System.out.println(updatedEmployee.getEmail());
 
 
     }
