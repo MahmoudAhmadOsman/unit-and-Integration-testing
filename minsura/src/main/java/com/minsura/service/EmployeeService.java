@@ -4,6 +4,7 @@ import com.minsura.dao.EmployeeDAO;
 import com.minsura.exception.ResourceNotFoundException;
 import com.minsura.model.Employee;
 import com.minsura.repository.EmployeeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.Optional;
 @Service
 public class EmployeeService implements EmployeeDAO {
 
-    //    @Autowired - you don't need annotation if you have parametrized constructor
+    @Autowired // - you don't need annotation if you have parametrized constructor
     private EmployeeRepository employeeRepository;
 
     public EmployeeService(EmployeeRepository employeeRepository) {
