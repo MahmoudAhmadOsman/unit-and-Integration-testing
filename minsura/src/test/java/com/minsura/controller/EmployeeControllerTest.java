@@ -34,7 +34,6 @@ class EmployeeControllerTest {
 
     // JUnit test for saveEmployee method
     @DisplayName("JUnit test for saveEmployee method")
-
     @Test
     public void givenEmployeeObject_whenCreateEmployee_thenReturnSavedEmployee() throws Exception {
 
@@ -48,12 +47,12 @@ class EmployeeControllerTest {
         //Stub the method
         BDDMockito.given(employeeService.saveEmployee(ArgumentMatchers.any(Employee.class)))
                 .willAnswer((invocation) -> invocation.getArgument(0));
+
         //when - action or the behavior that is being tested
 
         ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/employees/save")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(employee)));
-
 
         //then- verify the output
         response.andDo(MockMvcResultHandlers.print()) // print the result
@@ -64,7 +63,6 @@ class EmployeeControllerTest {
                         CoreMatchers.is(employee.getLastName())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email",
                         CoreMatchers.is(employee.getEmail())));
-
 
     }
 
